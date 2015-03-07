@@ -56,11 +56,11 @@ angular.module('starter.controllers', [])
 })
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
-  // $scope.champeteros = [
-  //   { nombre: "El Carlos", id: 1},
-  //   { nombre: "El Marcos", id: 2},
-  //   { nombre: "El Albert", id: 3},
-  // ]
+  $scope.champeteros = [
+    { nombre: "El Carlos", id: 1},
+    { nombre: "El Marcos", id: 2},
+    { nombre: "El Albert", id: 3},
+  ]
 
   // var result = Edutin.champeteros();
   // result.then(function (data){
