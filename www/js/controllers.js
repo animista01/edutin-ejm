@@ -50,15 +50,16 @@ angular.module('starter.controllers', [])
    var result = LoginService.individualCategory($stateParams.playlistId);
    result.then(function (data){
     $scope.objectHeaders = [];
-    $scope.nombreCategoria = data[0].Category;
+    $scope.nombreCategoria = data[0].Category.nombre;
     for (var i = 0; i < data.length; i++) {
       $scope.objectHeaders.push(data[i].Curso);
     }
+    console.log($scope.nombreCategoria);
 
     //console.log($scope.objectHeaders)
     
     $scope.cursos = $scope.objectHeaders;
-    //console.log(data);
+    console.log(data);
       
       
      
