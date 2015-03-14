@@ -1,20 +1,6 @@
 angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function ($scope, $ionicModal, $timeout, LoginService) {
-  var result = LoginService.primera();
-  result.then(function (data){
-    $scope.objectHeaders = [];
-    for (var i = 0; i < data.length; i++) {
-      $scope.objectHeaders.push(data[i].Category);
-    }
-    //console.log($scope.objectHeaders)
- 
-    $scope.categories = $scope.objectHeaders;
-    //console.log(data)
-  });
-  // Form data for the login modal
-  $scope.loginData = {};
-
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
     scope: $scope
@@ -44,33 +30,41 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Champeta', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
+.controller('PlaylistsCtrl', function($scope, LoginService) {
+ var result = LoginService.primera();
+  result.then(function (data){
+    $scope.objectHeaders = [];
+    for (var i = 0; i < data.length; i++) {
+      $scope.objectHeaders.push(data[i].Category);
+    }
+    //console.log($scope.objectHeaders)
+    
+    $scope.categories = $scope.objectHeaders;
+    //console.log(data)
+  });
+  // Form data for the login modal
+  $scope.loginData = {};
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-  $scope.champeteros = [
-    { nombre: "El Carlos", id: 1},
-    { nombre: "El Marcos", id: 2},
-    { nombre: "El Albert", id: 3},
-  ]
+.controller('PlaylistCtrl', function($scope, $stateParams, LoginService, $ionicLoading) {
+   var result = LoginService.individualCategory($stateParams.playlistId);
+   result.then(function (data){
+    $scope.objectHeaders = [];
+    $scope.nombreCategoria = data[0].Category;
+    for (var i = 0; i < data.length; i++) {
+      $scope.objectHeaders.push(data[i].Curso);
+    }
 
-  // var result = Edutin.champeteros();
-  // result.then(function (data){
-  //   if(data.status == 200){
-  //     $scope.champeteros = data.champeteros;
-  //     $ionicLoading.hide();
-  //   }else{
-  //     $ionicLoading.show({template: '<i class="icon ion-close-round"></i><p>'+data.message+'</p>', duration: 2500, showBackdrop: false});
-  //   }
-  // }, function (err){
-  //   $ionicLoading.show({template: '<p>Algo malo ocurrió</p>', duration: 1500, showBackdrop: false});
-  // });
+    //console.log($scope.objectHeaders)
+    
+    $scope.cursos = $scope.objectHeaders;
+    console.log(data);
+      
+      
+     
+   }, function (err){
+     $ionicLoading.show({template: '<p>Algo malo ocurrió</p>', duration: 1500, showBackdrop: false});
+   });
+
+
 });

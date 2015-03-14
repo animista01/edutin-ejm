@@ -35,6 +35,18 @@ angular.module('starter.services', [])
        defer.reject(err);
       });      
       return defer.promise;
+    },
+    individualCategory: function (id) {
+      var defer = $q.defer(); 
+      $http({
+        method: 'GET',
+        url: 'http://edutin.com/cursos/categoria/'+id+'/Nuevo%20-%20Antiguo/json'
+      }).success(function (data) {
+        defer.resolve(data);
+      }).error(function (err){
+       defer.reject(err);
+      });      
+      return defer.promise;
     }
   }  
 });
