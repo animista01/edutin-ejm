@@ -7,10 +7,10 @@ angular.module('starter.controllers', [])
     for (var i = 0; i < data.length; i++) {
       $scope.objectHeaders.push(data[i].Category);
     }
-    console.log($scope.objectHeaders)
+    //console.log($scope.objectHeaders)
  
-    $scope.categories = data;
-    console.log(data)
+    $scope.categories = $scope.objectHeaders;
+    //console.log(data)
   });
   // Form data for the login modal
   $scope.loginData = {};
