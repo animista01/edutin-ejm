@@ -58,7 +58,7 @@ angular.module('starter.controllers', [])
     //console.log($scope.objectHeaders)
     
     $scope.cursos = $scope.objectHeaders;
-    console.log(data);
+    //console.log(data);
       
       
      
