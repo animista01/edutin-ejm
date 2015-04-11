@@ -1,7 +1,7 @@
-<ion-view view-title="Cursos de {{nombreCategoria}}">
+<ion-view view-title="Cursos de {{Categoria.nombre}}">
   <ion-content>
     <ion-list>
-    	<ion-item ng-repeat="curso in cursos">
+    	<ion-item ng-repeat="curso in cursos" href="#/app/playlists/{{Categoria.id}}/{{curso.id}}">
     		<p class="nombreCurso">{{curso.nombre}}</p>
     	</ion-item>
     </ion-list>

@@ -1,0 +1,27 @@
+<ion-view view-title="{{curso.nombre}}">
+  <ion-content>
+    <div class="item item-body">
+      <img class="full-image" src="{{imgVideo[0]}}"> 
+      <p>
+        <a href="#/app/playlists/{{categoria}}/{{curso.id}}/ver" class="subdued">Ir al curso</a>
+      </p>
+      <p>  
+        {{curso.descripcion}}
+      </p>
+      <p>
+        <i class="icon ion-person-stalker"></i> {{curso.visitas}} visitas</i>
+      </p>
+    </div> 
+    <div class="list">
+      <item ng-repeat="imgvideo in imgsVideos">
+        <a class="item item-thumbnail-left" href="#">
+          <img src="{{imgvideo}}">
+          <h2></h2>
+          <p>{{videos[$index]}}</p>
+        </a>
+      </item>
+    </div>
+  </ion-content>
+</ion-view>
+
+

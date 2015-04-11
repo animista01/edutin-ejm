@@ -14,7 +14,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $sceDelegateProvider, $urlRouterProvider) {
+
+  $sceDelegateProvider.resourceUrlWhitelist([
+      // Allow same origin resource loads.
+      'self',
+      // Allow loading from our assets domain.  Notice the difference between * and **.
+      'http://youtube.com/**'
+    ]);
+
   $stateProvider
 
   .state('app', {
@@ -59,7 +67,28 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         controller: 'PlaylistCtrl'
       }
     }
-  });
+  })
+
+  .state('app.curso', {
+    url: "/playlists/:playlistId/:cursoId",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/curso.html",
+        controller: 'CursoCtrl'
+      }
+    }
+  })
+
+  .state('app.listavideo', {
+    url: "/playlists/:playlistId/:cursoId/:video",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/listavideo.html",
+        controller: 'CursoCtrl'
+      }
+    }
+  })
+  
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/playlists');
 });

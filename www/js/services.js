@@ -47,6 +47,18 @@ angular.module('starter.services', [])
        defer.reject(err);
       });      
       return defer.promise;
+    },
+    jsonVideo: function(idLista) {
+      var defer = $q.defer(); 
+      $http({
+        method: 'GET',
+        url: 'http://gdata.youtube.com/feeds/api/playlists/'+idLista+'/?v=2&alt=json&feature=plcp'
+      }).success(function (data) {
+        defer.resolve(data);
+      }).error(function (err){
+       defer.reject(err);
+      });      
+      return defer.promise;
     }
-  }  
+  }     
 });

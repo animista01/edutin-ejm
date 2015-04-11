@@ -50,22 +50,86 @@ angular.module('starter.controllers', [])
    var result = LoginService.individualCategory($stateParams.playlistId);
    result.then(function (data){
     $scope.objectHeaders = [];
-    $scope.nombreCategoria = data[0].Category.nombre;
+    $scope.Categoria = data[0].Category;
     for (var i = 0; i < data.length; i++) {
       $scope.objectHeaders.push(data[i].Curso);
     }
-    console.log($scope.nombreCategoria);
-
-    //console.log($scope.objectHeaders)
-    
     $scope.cursos = $scope.objectHeaders;
-    console.log(data);
-      
+    
       
      
    }, function (err){
      $ionicLoading.show({template: '<p>Algo malo ocurrió</p>', duration: 1500, showBackdrop: false});
    });
+})
+
+.controller('CursoCtrl', function($sce, $scope, $stateParams, LoginService, $ionicLoading, $controller) {
+  $scope.categoria = $stateParams.playlistId;
+   var result = LoginService.individualCategory($stateParams.playlistId);
+   result.then(function (data){
+    $scope.objectHeaders2 = [];
+    for (var i = 0; i < data.length; i++) {
+      $scope.objectHeaders2.push(data[i].Curso);
+    }
+    $scope.cursos2 = $scope.objectHeaders2;
+    $scope.curso = [];
+    $scope.idDeLaPlaylist = [];
+    for (var i = 0; i < $scope.cursos2.length; i++) {
+      if ($scope.cursos2[i].id==$stateParams.cursoId) {
+        $scope.curso.push($scope.cursos2[i]);
+        $scope.curso = $scope.curso[0];
+        
+        $scope.idDeLaPlaylist = $scope.curso.url;
+        $scope.idDeLaPlaylist = $scope.idDeLaPlaylist.split('http://www.youtube.com/playlist?list=');
+        var res = LoginService.jsonVideo($scope.idDeLaPlaylist[1]);
+        res.then(function (data){
+          //console.log(data);
+          $scope.imgVideo = [];
+          $scope.cabs = data.feed.entry;
+          $scope.cab1 = [];
+          $scope.cab2 = [];
+          angular.forEach($scope.cabs, function(cab) {
+            $scope.cab1.push(cab.title.$t);
+            $scope.cab2.push(cab.media$group.media$thumbnail[0].url);
+          })
+         $scope.videos = $scope.cab1;
+         $scope.imgsVideos = $scope.cab2;
+         //console.log($scope.videos);
+         //console.log($scope.imgsVideos);
+         $scope.imgVideo.push(data.feed.media$group.media$thumbnail[1].url);
 
 
-});
+        })
+        
+      };
+    }
+    
+    var movie = {
+      src:"http://www.youtube.com/embed/?listType=playlist&list="+$scope.idDeLaPlaylist[1]+"&autoplay=1&disablekb=1&enablejsapi=1&fs=0&hl=es&modestbranding=1&rel=0&iv_load_policy=3&theme=light"};
+    $scope.lv = movie.src;
+    $scope.VideoID = $sce.trustAsResourceUrl($scope.lv);
+
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    var player;
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
+
+    function onPlayerReady(event) {
+        event.target.playVideo();
+    }
+
+   }, function (err){
+     $ionicLoading.show({template: '<p>Algo malo ocurrió</p>', duration: 1500, showBackdrop: false});
+   });
+})
+
+ 
