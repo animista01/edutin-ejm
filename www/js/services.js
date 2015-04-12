@@ -5,10 +5,30 @@ angular.module('starter.services', [])
   return {
     login: function(email, password) {
       var defer = $q.defer(); 
-      var xsrf = { email: email, password: password };
+      var xsrf = { Useremail: email, Userpassword: password };
       $http({
         method: 'POST',
-        url: 'http://thesavvyland.com/api/user/signin',
+        url: 'http://edutin.com/users/login/',
+        transformRequest: function(obj) {
+          var str = [];
+          for(var p in obj)
+            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+          return str.join("&");
+        },
+        data: xsrf
+      }).success(function (data) {
+        defer.resolve(data);
+      }).error(function (err){
+       defer.reject(err);
+      });      
+      return defer.promise;
+    },
+    add: function (data){
+      var defer = $q.defer(); 
+      var xsrf = { Username: email, Userlastname: password, Userusername: password, Useremail: password, Userpassword: password};
+      $http({
+        method: 'POST',
+        url: 'http://edutin.com/users/add/',
         transformRequest: function(obj) {
           var str = [];
           for(var p in obj)

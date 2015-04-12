@@ -19,19 +19,24 @@ angular.module('starter.controllers', [])
   };
 
   // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
-
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
+  $scope.doLogin = function(inputs) {
+    var result = LoginService.login(inputs.email, inputs.password);
+    result.then(function (data){
       $scope.closeLogin();
-    }, 1000);
+      console.log(data)
+    });
+  };
+  $scope.doRegister = function(inputs) {
+    var result = LoginService.add(inputs.email, inputs.password);
+    result.then(function (data){
+      $scope.closeLogin();
+      console.log(data)
+    });
   };
 })
 
 .controller('PlaylistsCtrl', function($scope, LoginService) {
- var result = LoginService.primera();
+  var result = LoginService.primera();
   result.then(function (data){
     $scope.objectHeaders = [];
     for (var i = 0; i < data.length; i++) {
